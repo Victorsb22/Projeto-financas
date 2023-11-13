@@ -12,57 +12,39 @@
             rendimento = valor * 0.005
             return rendimento
         }
-        function calcularSaldo (mes, saldoInicial, salario, aluguel, contaDeAgua, contaDeLuz, internet, transporte, lazer, alimentacao){   
-        console.log(mes)
-        saldo = saldoInicial + salario - aluguel - contaDeAgua - contaDeLuz - internet - transporte - lazer - alimentacao
+        function calcularSaldo (mes, saldoInicial, lancamentos) {   
+        console.log (mes)
+
+        saldo = saldoInicial 
+        for ( lancamento of lancamentos){
+            saldo = saldo + lancamento
+        }
         estaNegativo = saldo < 0
         if (estaNegativo) {
             juros = calcularJuros(saldo)
-            saldo = saldo + juros
+            saldo = arredondar (saldo + juros)
             return saldo 
         } else {
             rendimento = calcularRendimento (saldo)
-            saldo = saldo + rendimento
+            saldo = arredondar (saldo + rendimento)
             }
             return saldo
-        }        
+        }    
+         
         saldoInicial = 0
-        salario1 = 3000
-        aluguel1 = 1000 
-        contaDeAgua1 = 200
-        contaDeLuz1 = 100 
-        internet1 = 100
-        transporte1= 300
-        lazer1 = 300
-        alimentacao1 = 500
+        lancamentosJaneiro = [3000, -1000, -200, -100, -100, -300, -300, -500]
 
-        saldo1 = calcularSaldo("Janeiro", saldoInicial, salario1, aluguel1, contaDeAgua1, contaDeLuz1, internet1, transporte1, lazer1, alimentacao1)        
+        saldo1 = calcularSaldo("Janeiro", saldoInicial, lancamentosJaneiro)        
         console.log (saldo1)
 
-        salario2 = 3000
-        aluguel2 = 1350
-        contaDeAgua2 = 200
-        contaDeLuz2 = 200 
-        internet2 = 200
-        transporte2= 300
-        lazer2 = 300
-        alimentacao2 = 500
+        lancamentosFevereiro = [3000, -1350, -200, -200, -200, -300, -300, -500]
        
-        saldo2 = calcularSaldo("Fevereiro", saldo1, salario2, aluguel2, contaDeAgua2, contaDeLuz2, internet2, transporte2, lazer2, alimentacao2)
+        saldo2 = calcularSaldo("Fevereiro", saldo1, lancamentosFevereiro)
         console.log (saldo2)
 
+        lancamentoMarco = [3000, -1000,-200, -300, -300, -300, -300, 500]  
 
-        salario3 = 3000
-        aluguel3 = 1000 
-        contaDeAgua3 = 200
-        contaDeLuz3 = 300 
-        internet3 = 300
-        transporte3= 300
-        lazer3 = 300
-        alimentacao3 = 500
-       
-
-        saldo3 = calcularSaldo("Marco", saldo2, salario3, aluguel3, contaDeAgua3,contaDeLuz3, internet3, transporte3, lazer3, alimentacao3)
+       saldo3 = calcularSaldo("Marco", saldo2, lancamentoMarco)
         console.log (saldo3)
 
         acumuladoAno = saldo3
