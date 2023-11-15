@@ -16,8 +16,8 @@
         console.log (mes)
 
         saldo = saldoInicial 
-        for ( lancamento of lancamentos){
-            saldo = saldo + lancamento
+        for ( lancamento of lancamentos){ 
+            saldo += lancamento
         }
         estaNegativo = saldo < 0
         if (estaNegativo) {
