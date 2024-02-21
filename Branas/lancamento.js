@@ -1,9 +1,6 @@
 class Lancamento {
 
 	constructor (categoria, tipo, valor) {
-		if (tipo !== "Receita" && tipo !== "Despesa") {
-			throw new Error("Lançamento Inválido: Tipo deve ser receita ou despesa");
-		}
 		if (valor <= 0) {
 			throw new Error("Lançamento Inválido: Valor deve ser maior que zero");
 		}

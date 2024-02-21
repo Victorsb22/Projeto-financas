@@ -29,69 +29,41 @@ janeiro.adicionarLancamento(new Lancamento("Escola", "Despesa", 500));
 fevereiro.adicionarLancamento(new Lancamento("Escola", "Despesa", 400));
 marco.adicionarLancamento(new Lancamento("Escola", "Despesa", 500));
 ano.calcularSaldo();
-
 console.log(ano.meses);
-
 function addElement(parent, elementType, text) {
-
     const element = document.createElement(elementType);
     if (text !== "" && text !== undefined && text !== null && text !== 0) {
-
         element.innerText = text;
     }
-
     parent.appendChild(element);
 }
-
-function renderizar () {
+function renderizar() {
     const app = document.getElementById("app");
     if (app.firstChild) {
         app.firstChild.remove();
     }
     const painel = document.createElement("div");
-    
-    const cores = ["red", "yellow", "green", "blue"]
-    const grafico = document.createElement("div");
-    grafico.className = "grafico";
+    const grafico = new Grafico();
     for (const mes of ano.meses) {
-        const coluna = document.createElement("div");
-        coluna.classname = "grafico-coluna";
-        const cor = document.createElement("div");
-        cor.style.height = (mes.totalizador.saldo * 100) / 10000 + "px";
-        cor.style.background = cores.pop();
-        coluna.appendChild(cor);
-        const nomeDoMes = document.createElement("div");
-        nomeDoMes.className = "grafico-coluna-texto";
-        nomeDoMes.innerText = mes.nome;
-        coluna.appendChild(cor);
-        coluna.appendChild(nomeDoMes);
-        grafico.appendChild(coluna);
+        grafico.adicionarColuna(mes.totalizador.saldo, mes.nome);
     }
-    painel.appendChild(grafico);
+    painel.appendChild(grafico.element);
 
     for (const mes of ano.meses) {
-        addElement(painel, "h4", mes.nome);
-
-        const tabelaLancamentos = new Tabela ("tabela-lancamentos");        
-        tabelaLancamentos.addRow("th",["Categoria","Valor"]);
-    
-
+       addElement(painel, "h4", mes.nome);
+        const tabelaLancamentos = new Tabela("tabela-lancamentos");
+        tabelaLancamentos.addRow("th", ["Categoria", "Valor"]);
         for (const lancamento of mes.lancamentos) {
-
-            tabelaLancamentos.addRow("td",[lancamento.categoria, formatarDinheiro(lancamento.getValorString())])
+            tabelaLancamentos.addRow("td", [lancamento.categoria, formatarDinheiro(lancamento.getValorString())])
         }
-
-        tabelaLancamentos.addRow ("th",["Juros", formatarDinheiro(mes.totalizador.juros)]);
-        tabelaLancamentos.addRow ("th",["Rendimentos", formatarDinheiro(mes.totalizador.rendimentos)]);
-        tabelaLancamentos.addRow ("th",["Total", formatarDinheiro(mes.totalizador.saldo)]);
+        tabelaLancamentos.addRow("th", ["Juros", formatarDinheiro(mes.totalizador.juros)]);
+        tabelaLancamentos.addRow("th", ["Rendimentos", formatarDinheiro(mes.totalizador.rendimentos)]);
+        tabelaLancamentos.addRow("th", ["Total", formatarDinheiro(mes.totalizador.saldo)]);
         painel.appendChild(tabelaLancamentos.element);
-
     }
     app.appendChild(painel);
 }
-
 renderizar();
-
 function adicionarLancamento() {
     const mes = document.getElementById("mes");
     const categoria = document.getElementById("categoria");
@@ -105,16 +77,11 @@ function adicionarLancamento() {
     tipo.value = "Receita";
     valor.value = "";
 }
-
 const botao = document.getElementById("botao");
 botao.addEventListener("click", adicionarLancamento);
-
 const mesSelect = document.getElementById("mes");
-
 for (const mes of ano.meses) {
     const option = document.createElement("option");
     option.text = mes.nome;
     mesSelect.add(option);
 }
-
-
